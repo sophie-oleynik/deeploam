@@ -1,13 +1,9 @@
-import React from "react";
-import { useState, useCallback } from "react";
+import React, { useCallback } from "react";
 import ReactMapGL, { Marker } from "react-map-gl";
 import Store from "../store/Store";
 import { observer } from "mobx-react-lite";
 
-import ControlDrag from "./Marker.jsx";
-
 const Map = observer(() => {
-  const [events, logEvents] = useState({});
 
   const onMarkerDragEnd = useCallback((event, index) => {
     Store.moveMarker(event.lngLat, index);
@@ -40,7 +36,7 @@ const Map = observer(() => {
           );
         })}
       </ReactMapGL>
-      <ControlDrag events={events} />
+      {/* <ControlDrag events={events} /> */}
     </div>
   );
 });

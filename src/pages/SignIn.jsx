@@ -1,24 +1,22 @@
-import React, { useState } from "react";
+import React from "react";
 import { Redirect } from "react-router-dom";
-import firebase from "../config";
+import AuthStore from '../store/modules/Auth';
 
 // const googleAuthProvider = firebase.auth.GoogleAuthProvider();
 
 const SignIn = () => {
-  const [currentUser, setCurrentUser] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const { email, password } = e.target.elements;
     try {
-      firebase.auth().signInWithEmailAndPassword(email.value, password.value);
-      setCurrentUser(true);
+      AuthStore.signIn({email: email.value, password: password.value});
     } catch (error) {
       alert(error);
     }
   };
 
-  if (currentUser) {
+  if (AuthStore.currentUser) {
     return <Redirect to="/" />;
   }
 

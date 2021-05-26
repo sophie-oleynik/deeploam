@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
-import firebaseConfig from "../config";
+import firebaseConfig from "../firebase";
 
 const SignUp = () => {
   const [currentUser, setCurrentUser] = useState(null);
