@@ -1,4 +1,5 @@
 @import "./SignUp";
+@import "./Map";
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -15,12 +16,10 @@ code {
 
 .page {
   display: flex;
+  position: relative;
 
-  &-sidebar {
-    width: 25%;
-  }
   &-map {
-    width: 75%;
+    width: 100%;
   }
 }
 

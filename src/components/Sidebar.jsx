@@ -1,56 +1,39 @@
 import React from "react";
+import Icon from "./common/Icon";
 import Store from "../store/Store";
 import { observer } from "mobx-react-lite";
 
 const Sidebar = observer(() => {
   return (
     <div className="page-sidebar">
-      <div
-        className="d-flex flex-column p-3 text-white bg-dark"
-        style={{ height: "100%" }}
-      >
-        <ul className="nav nav-pills flex-column mb-auto">
-          <span className="fs-4">Оберіть алгоритм:</span>
-          <li
-            className="list-group-item text-white bg-dark"
-            style={{ listStyleType: "none", border: "none" }}
-          >
-            <input type="checkbox" className="form-check-input me-1" />
-            Алгоритм 1
-          </li>
-          <li
-            className="list-group-item text-white bg-dark"
-            style={{ listStyleType: "none", border: "none" }}
-          >
-            <input type="checkbox" className="form-check-input me-1" />
-            Алгоритм 2
-          </li>
-          <li
-            className="list-group-item text-white bg-dark"
-            style={{ listStyleType: "none", border: "none" }}
-          >
-            <input type="checkbox" className="form-check-input me-1" />
-            Алгоритм 3
-          </li>
-        </ul>
-
-        <button
-          type="button"
-          className="btn btn-primary"
-          style={{ display: "flex", justifyContent: "center" }}
-        >
-          Показати маршрут
-        </button>
-
+      <form className="search-form">
+        <fieldset>
+          <input type="search" placeholder="Знайти місто..." />
+          <button type="submit">
+            <i className="fa fa-search"></i>
+          </button>
+        </fieldset>
         <button
           onClick={Store.toLocation}
           type="button"
-          className="btn btn-primary mt-2"
-          style={{ display: "flex", justifyContent: "center" }}
+          className="btn btn-white button-location"
         >
-          Моя локація
+          <Icon icon="geo" size="2rem" />
         </button>
+      </form>
+      <div className="town">Ваше місто:</div>
+      <div className="selected-locations">
+        {[0, 1].map((i) => (
+          <div className="location" key={i}>
+            <div className="location__title">Сільпо №1</div>
+            <div className="location__address">вул. Степана Бандери 23</div>
+            <div className="location__geo">50.450001, 30.523333</div>
+          </div>
+        ))}
       </div>
+      <button type="button" className="btn btn-success button-route">
+        Показати маршрут
+      </button>
     </div>
   );
 });
