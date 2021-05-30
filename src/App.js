@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Map from "./pages/Map";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import AuthStore from "./store/modules/Auth";
 
 export default function App() {
+  useEffect(() => {
+    AuthStore.relogUser();
+  })
   return (
     <Router>
       <Switch>

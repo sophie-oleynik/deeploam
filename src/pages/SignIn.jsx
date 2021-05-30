@@ -1,24 +1,20 @@
 import React from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import AuthStore from "../store/modules/Auth";
 import Background from "../assets/images/bg-01.jpg";
 import Icon from "../components/common/Icon";
 import Logo from "../components/common/Logo";
+import { observer } from "mobx-react-lite";
 
-// const googleAuthProvider = firebase.auth.GoogleAuthProvider();
-
-const SignIn = () => {
+const SignIn = observer(() => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const { email, password } = e.target.elements;
-    try {
-      AuthStore.signIn({ email: email.value, password: password.value });
-    } catch (error) {
-      alert(error);
-    }
+    AuthStore.signIn({ email: email.value, password: password.value })
+      .catch(err => alert("Користувача не існує"));
   };
 
-  if (AuthStore.currentUser) {
+  if (AuthStore.user) {
     return <Redirect to="/" />;
   }
 
@@ -59,9 +55,9 @@ const SignIn = () => {
               <Icon icon="password" width="1.5rem" height="3rem" />
             </div>
             <div className="login-text">
-              <a class="txt" href="#">
+              <Link className="txt" to="/signUp">
                 Хочеш створити акаунт?
-              </a>
+              </Link>
             </div>
             <div className="d-flex justify-content-center">
               <button type="submit" className="btn btn-success mt-2 px-5">
@@ -73,6 +69,6 @@ const SignIn = () => {
       </div>
     </>
   );
-};
+});
 
 export default SignIn;

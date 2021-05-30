@@ -3,10 +3,12 @@ import { getPosition } from "../Geolocation";
 import { FlyToInterpolator } from "react-map-gl";
 
 class Store {
+  isShowPanel = false;
+
   viewport = {
     latitude: 50.450001,
     longitude: 30.523333,
-    width: "75vw",
+    width: "100vw",
     height: "100vh",
     zoom: 10,
     transitionDuration: 1000,
@@ -23,6 +25,10 @@ class Store {
 
   setViewport(viewport) {
     this.viewport = viewport;
+  }
+
+  togglePanel = () => {
+    this.isShowPanel = !this.isShowPanel;
   }
 
   createMarker = (longitude, latitude) => {

@@ -1,27 +1,21 @@
-import React, { useState } from "react";
-import { Redirect } from "react-router-dom";
-import firebaseConfig from "../firebase";
+import React from "react";
+import { Redirect, Link } from "react-router-dom";
 import Background from "../assets/images/bg-01.jpg";
 import Icon from "../components/common/Icon";
 import Logo from "../components/common/Logo";
+import AuthStore from "../store/modules/Auth";
+import { observer } from "mobx-react-lite"; 
 
-const SignUp = () => {
-  const [currentUser, setCurrentUser] = useState(null);
+const SignUp = observer(() => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { email, password } = e.target.elements;
-    try {
-      firebaseConfig
-        .auth()
-        .createUserWithEmailAndPassword(email.value, password.value);
-      setCurrentUser(true);
-    } catch (error) {
-      alert(error);
-    }
+    const { email, password, name } = e.target.elements;
+    AuthStore.signUp({ name: name.value, email: email.value, password: password.value })
+      .catch(err => alert("Користувач вже існує"));
   };
 
-  if (currentUser) {
+  if (AuthStore.user) {
     return <Redirect to="/" />;
   }
 
@@ -44,11 +38,21 @@ const SignUp = () => {
               <input
                 required
                 className="form-control mb-2"
+                type="name"
+                name="name"
+                placeholder="Ваше Ім'я"
+              />
+              <Icon icon="user" width="1.5rem" height="3rem" />
+            </div>
+            <div className="wrapper-input">
+              <input
+                required
+                className="form-control mb-2"
                 type="email"
                 name="email"
                 placeholder="Email"
               />
-              <Icon icon="user" width="1.5rem" height="3rem" />
+              <Icon icon="mail" width="1.5rem" height="3rem" />
             </div>
 
             <div className="wrapper-input">
@@ -62,9 +66,9 @@ const SignUp = () => {
               <Icon icon="password" width="1.5rem" height="3rem" />
             </div>
             <div className="login-text">
-              <a class="txt" href="#">
+              <Link className="txt" to="/signIn">
                 Вже маєш створений акаунт?
-              </a>
+              </Link>
             </div>
             <div className="d-flex justify-content-center">
               <button type="submit" className="btn btn-success mt-2 px-5">
@@ -76,6 +80,6 @@ const SignUp = () => {
       </div>
     </>
   );
-};
+});
 
 export default SignUp;
