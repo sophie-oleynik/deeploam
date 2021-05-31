@@ -1,6 +1,6 @@
 import { makeAutoObservable } from "mobx";
 import firebase from '../../firebase';
-
+import LocationsStore from './Locations';
 class AuthStore {
     user = null;
 
@@ -19,6 +19,7 @@ class AuthStore {
                 };
                 this.user = user;
                 localStorage.setItem('map_user', JSON.stringify(user));
+                LocationsStore.loadLocations();
             })
             .catch(err => { return Promise.reject(err) })
     }
@@ -33,6 +34,7 @@ class AuthStore {
                             email: firebase.auth().currentUser.email,
                             displayName: firebase.auth().currentUser.displayName
                         };
+                        LocationsStore.loadLocations();
                     })
             })
             .catch(err => { return Promise.reject(err) })
@@ -42,6 +44,7 @@ class AuthStore {
         if (user && !this.user) {
             user = JSON.parse(user);
             this.user = user;
+            LocationsStore.loadLocations();
         }
     }
     logOut = () => {

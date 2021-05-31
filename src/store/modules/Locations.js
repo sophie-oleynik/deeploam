@@ -1,25 +1,36 @@
 import { makeAutoObservable } from "mobx";
-
-
+import firebase from "../../firebase";
+import AuthStore from "./Auth";
 class LocationsStore {
-    locations = null;
-
+    locations = [];
+    activeLocation = null;
     constructor() {
         makeAutoObservable(this);
     }
 
-    loadLocations = (userId) => {
-
+    loadLocations = async () => {
+        if (!AuthStore.user) return;
+        var starCountRef = firebase.database().ref('locations/' + AuthStore.user.id);
+        starCountRef.on('value', (snapshot) => {
+            this.locations = snapshot.val() || [];
+        });
     }
-
-    addLocation = () => {
-        
+    saveLocation = (marker) => {
+        this.activeLocation = { ...marker, name: '' };
     }
-    saveNewLocation = () => {
+    addLocation = ({ name }) => {
+        this.activeLocation.name = name;
+        this.locations = [...this.locations, this.activeLocation];
+        firebase.database().ref('locations/' + AuthStore.user.id).set(this.locations);
 
+        this.activeLocation = null;
+    }
+    closeDialog = () => {
+        this.activeLocation = null;
     }
 }
+let store = new LocationsStore()
 
-export default new LocationsStore();
+export default store;
 
 

@@ -1,25 +1,62 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useRef, useEffect } from "react";
 import ReactMapGL, { Marker } from "react-map-gl";
 import Store from "../store/Store";
+import MapStore from "../store/modules/Map";
 import { observer } from "mobx-react-lite";
 
 const Map = observer(() => {
   const onMarkerDragEnd = useCallback((event, index) => {
-    Store.moveMarker(event.lngLat, index);
+    MapStore.moveMarker(event.lngLat, index);
   }, []);
+  const mapRef = useRef(null);
+
+  useEffect(() => {
+    let map = mapRef.current.getMap();
+    if (Store.resultWay) {
+      map.addSource('result-way', {
+        'type': 'geojson',
+        'data': {
+          'type': 'Feature',
+          'properties': {},
+          'geometry': {
+            'type': 'LineString',
+            'coordinates': Store.resultWay.map(m => [m.longitude, m.latitude])
+          }
+        },
+      });
+      map.addLayer({
+        'id': 'result-way',
+        'type': 'line',
+        'source': 'result-way',
+        'layout': {
+          'line-join': 'round',
+          'line-cap': 'round'
+        },
+        'paint': {
+          'line-color': 'red',
+          'line-width': 8
+        }
+      });
+    }
+    return () => {
+      if (map && map.getSource('result-way')) map.removeSource('result-way');
+    }
+  })
 
   return (
     <div className="page-map">
       <ReactMapGL
-        {...Store.viewport}
-        onClick={Store.mapClick}
-        onViewportChange={(viewport) => Store.setViewport(viewport)}
+        ref={mapRef}
+        {...MapStore.viewport}
+        onClick={MapStore.mapClick}
+        onViewportChange={(viewport) => MapStore.setViewport(viewport)}
         mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
         mapStyle="mapbox://styles/egotkacheco/ckp2m7f2p0a0e17kux4x33gdx"
       >
-        {Store.markers.map((marker, index) => {
+        {MapStore.markers.map((marker, index) => {
           return (
             <Marker
+              key={index}
               latitude={marker.latitude}
               longitude={marker.longitude}
               offsetLeft={-20}
