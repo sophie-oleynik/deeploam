@@ -234,3 +234,22 @@
   }
 }
 
+.search-wrapper {
+  position: relative;
+  height: 2rem;
+  .icon-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 0.5rem;
+    transform: translateY(-50%);
+  }
+
+  input {
+    width: 12rem;
+    height: 100%;
+    border: none;
+    border-radius: 0.5rem;
+    outline: none;
+    padding-left: 2rem;
+  }
+}

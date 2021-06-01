@@ -4,6 +4,7 @@ import { observer } from 'mobx-react-lite';
 import AuthStore from '../store/modules/Auth';
 import Store from '../store/Store';
 import { Link } from 'react-router-dom';
+import Search from './Search';
 const Navigation = observer(() => {
 
     return (
@@ -21,7 +22,9 @@ const Navigation = observer(() => {
                                 Збережені локації
                             </button>
 
-                            <div className="ms-auto">
+                            <div className="ms-auto "></div>
+                            <Search />
+                            <div className="ms-3">
                                 {AuthStore.user.displayName}
                             </div>
                             <button className="btn btn-dark btn-outline ms-3" onClick={AuthStore.logOut}>
