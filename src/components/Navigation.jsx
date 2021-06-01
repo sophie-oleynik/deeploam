@@ -3,6 +3,7 @@ import Logo from './common/Logo';
 import { observer } from 'mobx-react-lite';
 import AuthStore from '../store/modules/Auth';
 import Store from '../store/Store';
+import MapStore from '../store/modules/Map';
 import { Link } from 'react-router-dom';
 import Search from './Search';
 const Navigation = observer(() => {
@@ -21,7 +22,9 @@ const Navigation = observer(() => {
                             <button className="btn btn-dark btn-outline ms-3" onClick={Store.toggleSaved}>
                                 Збережені локації
                             </button>
-
+                            <button className="btn btn-dark btn-outline ms-3" onClick={MapStore.toLocation}>
+                                Моє місцезнаходження
+                            </button>
                             <div className="ms-auto "></div>
                             <Search />
                             <div className="ms-3">
