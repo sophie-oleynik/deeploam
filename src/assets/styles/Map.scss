@@ -206,9 +206,31 @@
       }
     }
   }
+
+  .time-result {
+    background: rgba(0, 0, 0, 0.75);
+    margin-top: 3rem;
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+  }
 }
 
 #result-way-canvas {
   color: red;
+}
+
+.pin-wrapper {
+  position: relative;
+
+  .pin-text-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+  }
 }
 

@@ -11,9 +11,16 @@ const MapPage = observer(() => {
   return (
     <div className="page">
       <Navigation />
+
       <Map />
+
+      {/* Card with checked locations */}
       <Sidebar />
+
+      {/* Card with saved locations */}
       <SavedLocations />
+
+      {/* Modal for creating location */}
       <NewLocation />
     </div>
   );

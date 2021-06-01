@@ -13,8 +13,8 @@ class Store {
         transitionInterpolator: new FlyToInterpolator(),
     };
 
-    markers = [
-    ];
+    markers = [];
+    startMarker = 0;
 
     constructor() {
         makeAutoObservable(this);
@@ -43,7 +43,9 @@ class Store {
     removeMarker = id => {
         this.markers = this.markers.filter((marker, index) => index !== id);
     }
-
+    setStartMarker = index => {
+        this.startMarker = index;
+    }
     moveMarker = (lngLat, index) => {
         this.markers[index].longitude = Number(lngLat[0].toFixed(5));
         this.markers[index].latitude = Number(lngLat[1].toFixed(5));

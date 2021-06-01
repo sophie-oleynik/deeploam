@@ -11,7 +11,7 @@ const Sidebar = observer(() => {
 
   if (Store.resultWay) return (
     <div className={`page-sidebar ${isShow ? ' show' : null}`}>
-      <ResultWay result={Store.resultWay} back={Store.clearResult} />
+      <ResultWay result={Store.resultWay} resultTime={Store.resultTime} back={Store.clearResult} />
     </div>
   )
 
